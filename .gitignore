@@ -30,3 +30,22 @@
 *.exe
 *.out
 *.app
+
+# cmake
+CMakeCache.txt
+*.cmake
+CMakeFiles/
+install_manifest.txt
+Makefile
+MANIFEST
+CTestTestfile.cmake
+*.json
+
+# vim
+*.swp
+
+
+# testing
+Testing/
+googletest*
+*.log
