@@ -10,16 +10,24 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 # Get lists of source files
-file(GLOB_RECURSE C_SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.c")
+set(${PROJECT_NAME}_C_SOURCES
+    ./include/FlailSnail.h
+    ./include/compilers.h
+    ./include/print_provenance_log.h
+    ./include/utils.h
+    ./src/print_provenance_log.c
+    ./src/utils.c
+)
 
 # Create library
-add_library(${PROJECT_NAME} ${C_SRC_FILES})
+add_library(${PROJECT_NAME} ${${PROJECT_NAME}_C_SOURCES})
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 # Configure library options
 # - tell cmake where to find header files for either building or installing
 target_include_directories(
     ${PROJECT_NAME} 
-    PRIVATE 
+    PUBLIC
     $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
@@ -27,18 +35,41 @@ target_include_directories(
 # Compile with better warnings
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
 
+
+########################
+# Tests
+
+string(COMPARE EQUAL "${PROJECT_NAME}" "${CMAKE_PROJECT_NAME}" PROJECT_IS_TOP_LEVEL)
+if(PROJECT_IS_TOP_LEVEL)
+    enable_testing()
+
+    # Targets for building tests
+    add_custom_target(build-tests)
+    add_subdirectory(tests EXCLUDE_FROM_ALL)
+    
+    # Targets for running tests
+    add_custom_target(run-tests
+        COMMAND ctest --output-on-failure
+    )
+    add_dependencies(run-tests build-tests)
+endif()
+
+########################
+# Install
+
 # Set install instructions
 install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}_Targets
+        EXPORT ${PROJECT_NAME}Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # Set versioning info
 write_basic_package_version_file("${PROJECT_NAME}ConfigVersion.cmake"
     VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMinorVersion
+    COMPATIBILITY SameMajorVersion
 )
 
 configure_package_config_file(
@@ -49,10 +80,11 @@ configure_package_config_file(
 )
 
 # Set targets to install
-install(EXPORT ${PROJECT_NAME}_Targets
-        FILE ${PROJECT_NAME}Targets.cmake
-        NAMESPACE ${PROJECT_NAME}::
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+install(
+    EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 # install Cmake bits
@@ -64,17 +96,10 @@ install(
         ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
 )
 
-# install project-level headers to system include dir
-install(
-    FILES 
-        ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.h 
-    DESTINATION 
-        ${CMAKE_INSTALL_INCLUDEDIR}
-)
 # install project include dir to system include dir
 install(
     DIRECTORY 
         ${PROJECT_SOURCE_DIR}/include 
     DESTINATION
-        ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+        ${CMAKE_INSTALL_INCLUDEDIR}
 )
