@@ -11,10 +11,10 @@ include(CMakePackageConfigHelpers)
 
 # Get lists of source files
 set(${PROJECT_NAME}_C_SOURCES
-    ./include/FlailSnail.h
-    ./include/compilers.h
-    ./include/print_provenance_log.h
-    ./include/utils.h
+    ./include/FlailSnail/FlailSnail.h
+    ./include/FlailSnail/compilers.h
+    ./include/FlailSnail/print_provenance_log.h
+    ./include/FlailSnail/utils.h
     ./src/print_provenance_log.c
     ./src/utils.c
 )
@@ -97,4 +97,4 @@ install(
 )
 
 # install project include dir to system include dir
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

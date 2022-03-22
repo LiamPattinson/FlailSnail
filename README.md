@@ -7,11 +7,9 @@ A library for describing a C/C++/Fortran run in detail, using only a single func
 Installation is handled using cmake:
 
 ```
-> mkdir build
-> cd build
-> cmake ..
-> make
-> sudo make install
+> cmake . -B build
+> cmake --build build
+> sudo cmake --build build --target install
 ```
 
 ## Usage
@@ -32,16 +30,13 @@ Fortran support is not yet available, but is a planned feature.
 
 ## Testing
 
-From within the `build` directory:
-
 ```
-cmake ..
-make run-tests
+> cmake --build build --target run-tests
 # check the files worked -- not yet automated!
-cat tests/*.log
+> cat build/tests/*.log
 
 # try again with different compilers
-cmake .. -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++
-make run-tests
-cat tests/*.log
+> cmake . -B build_clang -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++
+> cmake --build build_clang --target run-tests
+> cat build_clang/tests/*.log
 ```
