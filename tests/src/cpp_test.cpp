@@ -1,4 +1,4 @@
-#include <FlailSnail.h>
+#include "FlailSnail.h"
 #include <vector> // make sure this won't compile with C
 
 int main(int argc, char* argv[]){
