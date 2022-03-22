@@ -26,9 +26,9 @@ struct FSCompilerInfo {
     #define FS_COMPILER_GNU
 #elif defined(__GNUC__) // note: clang also defines __GNUC__, so this must be an elif
     #ifdef __GNUG__
-        #define FS_COMPILER_NAME "G++"
+        #define FS_COMPILER_NAME "g++"
     #else
-        #define FS_COMPILER_NAME "GCC"
+        #define FS_COMPILER_NAME "gcc"
     #endif
     #define FS_COMP_MAJOR FS_STRINGIFY(__GNUC__)
     #define FS_COMP_MINOR FS_STRINGIFY(__GNUC_MINOR__)

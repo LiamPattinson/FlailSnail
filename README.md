@@ -18,19 +18,9 @@ Installation is handled using cmake:
 
 To print details of a code run, try:
 
-```c
-// C code
-#include <FlailSnail.h>
-
-int main(int argc, char* argv[]){
-    print_provenance_log(argc, argv);
-    return 0;
-}
-```
-
 ```cpp
-// C++ code
-#include <FlailSnail.hpp>
+// C/C++ code
+#include <FlailSnail.h>
 
 int main(int argc, char* argv[]){
     print_provenance_log(argc, argv);

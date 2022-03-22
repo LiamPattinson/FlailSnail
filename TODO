@@ -1,0 +1,2 @@
+split utils.h to utils.h and utils.hpp (or a better name than utils...)
+rewrite most source stuff as C++

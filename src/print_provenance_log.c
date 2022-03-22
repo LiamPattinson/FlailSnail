@@ -29,6 +29,7 @@ void _print_provenance_log(
     fprintf(file, "compile_date = %s\n", fs_compiler_info.date);
 
     fprintf(file, "\n[RUNTIME DETAILS]\n");
+    fprintf(file, "program_name = %s\n", argv[0]);
     for( int ii=1; ii<argc; ++ii){
         fprintf(file, "command_arg_%d = %s\n", ii, argv[ii]);
     }

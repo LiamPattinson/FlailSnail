@@ -68,7 +68,6 @@ install(
 install(
     FILES 
         ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.h 
-        ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.hpp
     DESTINATION 
         ${CMAKE_INSTALL_INCLUDEDIR}
 )
