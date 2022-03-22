@@ -10,8 +10,8 @@ extern "C" {
 // calling program. If it were a regular function defined in a .c file, this would
 // simply tell us the C compiler used to compile FlailSnail.
 
-#include "FlailSnail/include/print_provenance_log.h"
-#include "FlailSnail/include/compilers.h"
+#include "print_provenance_log.h"
+#include "compilers.h"
 
 #define print_provenance_log(argc, argv)\
     /* expand compiler details macro, get fs_compiler_info struct */\
