@@ -97,9 +97,4 @@ install(
 )
 
 # install project include dir to system include dir
-install(
-    DIRECTORY 
-        ${PROJECT_SOURCE_DIR}/include 
-    DESTINATION
-        ${CMAKE_INSTALL_INCLUDEDIR}
-)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
